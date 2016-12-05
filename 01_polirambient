@@ -1,0 +1,66 @@
+# inital test for a "song". 24/11/16
+
+with_fx :reverb, mix: 0.5, room: 0.7 do
+  use_synth :hollow
+  
+  live_loop :note1 do
+    play choose([:E4, :B4]), attack: 6, release: 6
+    sleep 8
+  end
+  
+  live_loop :note2 do
+    play choose([:G4, :D4]), attack: 4, release: 5
+    sleep 10
+  end
+  
+  live_loop :note3 do
+    play choose([:Cs5, :Gs4]), attack: 5, release: 5
+    sleep 11
+  end
+end
+
+live_loop :skit, delay: 25 do
+  with_fx :slicer, phase: 1, invert_wave: 1, wave: 0 do
+    with_fx :slicer, wave: 0, phase: 0.25 do
+      sample :loop_mika, rate: -1, amp: 0.9, pan: [0.5, -0.5, 0].choose
+    end
+    sleep 8
+  end
+end
+
+use_synth :sine
+live_loop :sequencer, delay: 45 do
+  n = (ring :r, :e1, :g2, :gs3, :r, :a4, :r, :g3).tick
+  play n, release: 0.03, cutoff: 10, amp: 0.8
+  cue :sequencer
+  sleep 0.125
+end
+
+# bass line
+live_loop :bass, delay: 85 do
+  use_synth :saw
+  
+  16.times do
+    play :e2, attack: 0.1, sustain: 0.9, release: 1.5, cutoff: 40, amp: 0.7
+    sleep 2
+    play :g2, attack: 0.1, sustain: 0.9, release: 1.4, cutoff: 40, amp: 0.7
+    sleep 2
+    play :d1, attack: 0.1, sustain: 0.9, release: 1.4, cutoff: 40, amp: 0.7
+    sleep 2
+  end
+end
+
+live_loop :hihat, delay: 65 do
+  32.times do
+    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 2
+    sleep 0.125
+    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 1
+    sleep 0.125
+    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 3
+    sleep 0.125
+    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 1.5
+    sleep 0.75
+  end
+end
+
+# never ends..
