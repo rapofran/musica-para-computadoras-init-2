@@ -1,0 +1,83 @@
+# sample hip_ho, make a hip hop with sonic pi
+
+path = "./samples/hip_ho.wav"
+duration = sample_duration path, beat_stretch: 8
+use_bpm 60
+
+fx_mix = 0.4
+live_loop :strings do
+  with_fx :slicer, phase: 0.125, wave: 0, mix: fx_mix do
+    sample path, beat_stretch: 8, pan: [0, -0.2, 0.2].choose, rate: [1, 1, 1, 1, -1, -1].choose
+  end
+  
+  sleep duration
+  fx_mix += 0.05 if fx_mix < 0.9
+end
+
+sleep 24
+use_bpm 85
+
+with_fx :reverb, mix: 0.11 do
+  live_loop :hihat do
+    sample :drum_cymbal_open, attack: 0.01, sustain: 0, release: 0.1, amp: 0.15
+    sleep 0.5
+  end
+  
+  live_loop :bd do
+    sample :bd_haus, cutoff: 100, amp: 0.49
+    sleep 0.5
+    sample :bd_haus, cutoff: 100, amp: 0.45 if one_in(3)
+    sleep 1
+  end
+  
+  live_loop :sd do
+    sleep 2
+    sample :drum_snare_hard, amp: 0.55
+  end
+end
+
+amp = 0.35
+cutoff_low = 50
+cutoff = 60
+
+sleep 34
+live_loop :bass do
+  use_synth :saw
+  sync :sd
+  
+  16.times do
+    play :g2, attack: 0.1, sustain: 0.6, release: 0.5, cutoff: cutoff_low, amp: amp
+    sleep 1
+    play :d2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    play :g2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    
+    play :a2, attack: 0.1, sustain: 0.6, release: 0.5, cutoff: cutoff_low, amp: amp
+    sleep 1
+    play :e2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    play :a2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    
+    play :f2, attack: 0.1, sustain: 0.6, release: 0.5, cutoff: cutoff_low, amp: amp
+    sleep 1
+    play :c2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    play :f2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    
+    play :g2, attack: 0.1, sustain: 0.6, release: 0.5, cutoff: cutoff_low, amp: amp
+    sleep 1
+    play :d2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+    play :g2, attack: 0.1, sustain: 0.3, release: 0.2, cutoff: cutoff, amp: amp
+    sleep 0.5
+  end
+end
+
+sleep 32
+live_loop :hihat do
+  sample :drum_cymbal_open, attack: 0.01, sustain: 0, release: 0.08, amp: 0.07
+  sleep 0.25
+end
