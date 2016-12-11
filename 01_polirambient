@@ -1,21 +1,23 @@
 # inital test for a "song". 24/11/16
 
 with_fx :reverb, mix: 0.5, room: 0.7 do
-  use_synth :hollow
+  use_synth :dark_ambience
+  amp = 0.8
   
   live_loop :note1 do
-    play choose([:E4, :B4]), attack: 6, release: 6
-    sleep 8
+    play choose([:E4, :B4]), attack: 6, release: 6, amp: amp, pan: [-0.8, 0.8, 0].choose
+    sleep 6
   end
   
   live_loop :note2 do
-    play choose([:G4, :D4]), attack: 4, release: 5
-    sleep 10
+    play choose([:G4, :D4]), attack: 4, release: 5, amp: amp, pan: [0.8, -0.8, 0].choose
+    sleep 9
   end
   
   live_loop :note3 do
-    play choose([:Cs5, :Gs4]), attack: 5, release: 5
+    play choose([:Cs5, :Gs4]), attack: 5, release: 5, amp: amp, pan: [0, -0.8, 0.8].choose
     sleep 11
+    amp = amp - 0.05
   end
 end
 
@@ -40,27 +42,21 @@ end
 live_loop :bass, delay: 85 do
   use_synth :saw
   
-  16.times do
-    play :e2, attack: 0.1, sustain: 0.9, release: 1.5, cutoff: 40, amp: 0.7
-    sleep 2
-    play :g2, attack: 0.1, sustain: 0.9, release: 1.4, cutoff: 40, amp: 0.7
-    sleep 2
-    play :d1, attack: 0.1, sustain: 0.9, release: 1.4, cutoff: 40, amp: 0.7
-    sleep 2
-  end
+  play :e2, attack: 0.1, sustain: 0.9, release: 1.5, cutoff: 40, amp: 0.7
+  sleep 2
+  play :g2, attack: 0.1, sustain: 0.9, release: 1.4, cutoff: 40, amp: 0.7
+  sleep 2
+  play :d1, attack: 0.1, sustain: 0.9, release: 1.4, cutoff: 60, amp: 1
+  sleep 2
 end
 
 live_loop :hihat, delay: 65 do
-  32.times do
-    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 2
-    sleep 0.125
-    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 1
-    sleep 0.125
-    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 3
-    sleep 0.125
-    sample :drum_cymbal_closed, finish: 0.03, amp: 0.5, rate: 1.5
-    sleep 0.75
-  end
+  sample :drum_cymbal_closed, finish: 0.03, amp: 0.6, rate: 2
+  sleep 0.125
+  sample :drum_cymbal_closed, finish: 0.03, amp: 0.6, rate: 1
+  sleep 0.125
+  sample :drum_cymbal_closed, finish: 0.03, amp: 0.6, rate: 3
+  sleep 0.125
+  sample :drum_cymbal_closed, finish: 0.03, amp: 0.6, rate: 1.5
+  sleep 0.75
 end
-
-# never ends..

@@ -1,4 +1,4 @@
-# sample hip_ho, make a hip hop with sonic pi
+# sample hip_ho, make a hip hop test with sonic pi
 
 path = "./samples/hip_ho.wav"
 duration = sample_duration path, beat_stretch: 8
@@ -17,7 +17,7 @@ end
 sleep 24
 use_bpm 85
 
-with_fx :reverb, mix: 0.11 do
+with_fx :reverb, mix: 0.09 do
   live_loop :hihat do
     sample :drum_cymbal_open, attack: 0.01, sustain: 0, release: 0.1, amp: 0.15
     sleep 0.5
@@ -36,7 +36,7 @@ with_fx :reverb, mix: 0.11 do
   end
 end
 
-amp = 0.35
+amp = 0.5
 cutoff_low = 50
 cutoff = 60
 
